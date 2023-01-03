@@ -49,4 +49,4 @@ if __name__ == "__main__":
     pygame.quit()
 ```
 
-Chamaremos a função ```python pygame.display.set_mode```
+Chamaremos a função ```pygame.display.set_mode```
