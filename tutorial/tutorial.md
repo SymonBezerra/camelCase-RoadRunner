@@ -155,5 +155,11 @@ FG_COLOR = (255, 255, 255) # FG = "foreground", principal; RGB para branco
 E lá no nosso game loop, vamos adicionar a função ```fill```, que vai preencher a tela inteira, neste caso, com a cor de fundo que nós definimos:
 
 ```python
+screen.fill(BG_COLOR)
 
+# vamos aproveitar e trocar aquela tupla (255, 255, 255)
+# pela nova constante FG_COLOR aqui também!
+pygame.draw.rect(screen, FG_COLOR, rect=(rect_x, rect_y, 20, 40))
 ```
+
+Agora sim: o nosso carrinho pode se mexer sem deixar um rastro branco na tela!
