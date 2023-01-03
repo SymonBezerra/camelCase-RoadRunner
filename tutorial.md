@@ -19,4 +19,4 @@ if __name__ == "__main__":
 
 ##### No jogo eletrônico, as imagens serão geradas de maneira diferente, a depender de qual comando foi executado. Por exemplo, ao apertar a seta para a esquerda, o carrinho se move alguns pixels nessa direção. #####
 
-##### Então, definiremos um ciclo que se repetirá ao longo da execução do nosso jogo (o ####"game loop"####), e cada repetição desse ciclo será chamada de ####"frame"####. #####
+##### Então, definiremos um ciclo que se repetirá ao longo da execução do nosso jogo (o *"game loop"*), e cada repetição desse ciclo será chamada de *"frame"*. #####
