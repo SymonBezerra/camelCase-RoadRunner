@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
 É importante entendermos que todo jogo eletrônico gera imagens à medida que recebe comandos. Quando assistimos um filme ou programa de TV, damos o play em um programa já pré-definido.
 
-No jogo eletrônico, as imagens serão geradas de maneira diferente, a depender de qual comando foi executado. Por exemplo, ao apertar a seta para a esquerda, o carrinho se move alguns pixels nessa direção. #####
+No jogo eletrônico, as imagens serão geradas de maneira diferente, a depender de qual comando foi executado. Por exemplo, ao apertar a seta para a esquerda, o carrinho se move alguns pixels nessa direção.
 
 Então, definiremos um ciclo que se repetirá ao longo da execução do nosso jogo (o *"game loop"*), e cada repetição desse ciclo será chamada de *"frame"*. 
 
