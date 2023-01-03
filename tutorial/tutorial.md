@@ -333,7 +333,7 @@ pygame.draw.rect(screen, ROAD_COLOR, (LEFT_BARRIER - 20, 0, 20, 600))
 pygame.draw.rect(screen, ROAD_COLOR, (RIGHT_BARRIER + 20, 0, 20, 600))
 ```
 
-## Adicionando obstáculos e colisão
+## Adicionando os obstáculos
 
 Para finalizarmos, precisamos adicionar a classe para os nossos obstáculos. Bom, ela é idêntica ao nosso carro, porém com uma diferença: ao invés de se movimentar para as quatro direções, ela apenas se movimenta para cima, já que a nossa estrada vai aparecendo em um esquema de rolagem. 
 
