@@ -1,11 +1,17 @@
 import pygame
 # setas do teclado + tecla pressionada
 from pygame.locals import K_UP, K_DOWN, K_RIGHT, K_LEFT, KEYDOWN
-screen = pygame.display.set_mode([800,600])
+screen = pygame.display.set_mode([800, 600])
 clock = pygame.time.Clock()
 
 BG_COLOR = (0,0,0)
 FG_COLOR = (255,255,255)
+ROAD_COLOR = (0, 0, 255)
+OBSTACLE_COLOR = (255, 255, 0)
+
+# barreiras laterais
+LEFT_BARRIER = 200
+RIGHT_BARRIER = 600
 
 class Car(pygame.sprite.Sprite):
     
@@ -32,9 +38,13 @@ class Car(pygame.sprite.Sprite):
             self.y -= 5
         elif direction == "DOWN":
             self.y += 5
-        elif direction == "LEFT":
+        elif direction == "LEFT" and self.x > LEFT_BARRIER:
+                                # se a posição X for maior
+                                # que a barreira dos 200px
             self.x -= 5
-        elif direction == "RIGHT":
+        elif direction == "RIGHT" and self.x < RIGHT_BARRIER:
+                                    # se a posição X for menor
+                                    # que a barreira dos 400px
             self.x += 5
         
         # assim, vamos atualizar a posição do nosso retângulo
@@ -74,6 +84,9 @@ if __name__ == "__main__":
             car.refresh("LEFT")
         elif keys[K_RIGHT]:
             car.refresh("RIGHT")
+
+        pygame.draw.rect(screen, ROAD_COLOR, (LEFT_BARRIER - 20, 0, 20, 600))
+        pygame.draw.rect(screen, ROAD_COLOR, (RIGHT_BARRIER + 20, 0, 20, 600))
 
         car.show(screen)
 

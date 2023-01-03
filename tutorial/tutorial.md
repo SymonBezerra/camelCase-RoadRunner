@@ -4,6 +4,8 @@ Neste tutorial, vamos aprender como implementar o jogo "Road Runner", desenvolvi
 
 O jogo foi desenvolvido pelos gêmeos Andrew e Philip Oliver, para um computador doméstico de 8 bits chamado *Dragon 32*, quando eles ainda eram adolescentes. O jogo consiste em um carrinho que percorre uma estrada e desvia de obstáculos gerados aleatoriamente. O código original foi publicado em uma revista inglesa chamada *Computer & Video Games*, e pode ser conferido [neste arquivo do GitHub](https://github.com/arhneu/road-runner/blob/master/road-runner.bas).
 
+O jogo original foi desenvolvido em uma linguagem de programação muito popular nos computadores dos anos 80 chamada *BASIC*, que era bem simples e versátil como Python, porém não muito poderosa, principalmente devido às limitações do hardware da época. Mesmo assim, muitas pessoas — e até crianças — conseguiam fazer coisas incríveis com a linguagem. Entre essas coisas, jogos eletrônicos, alguns até bem incríveis!  
+
 ![Imagem do jogo original](/tutorial/print_road_runner.png)
 
 Para isso, é necessário fazermos a instalação da biblioteca através do gerenciador de pacotes do Python, o PIP.
@@ -31,7 +33,7 @@ Para começar, vamos modificar o nosso código para desenhar um quadrado branco 
 ```python
 import pygame
 # inicializando a tela do nosso jogo
-screen = pygame.display.set_mode([800,600])
+screen = pygame.display.set_mode([800, 600])
 
 if __name__ == "__main__":
     
@@ -99,7 +101,7 @@ Outra coisa que vamos adicionar é um ```pygame.time.Clock```. Este objeto será
 import pygame
 # setas do teclado + tecla pressionada
 from pygame.locals import K_UP, K_DOWN, K_RIGHT, K_LEFT, KEYDOWN
-screen = pygame.display.set_mode([800,600])
+screen = pygame.display.set_mode([800, 600])
 clock = pygame.time.Clock()
 
 if __name__ == "__main__":
@@ -282,3 +284,37 @@ if __name__ == "__main__":
 ```
 
 ## Criando a Estrada
+
+Agora, vamos resolver mais um problema do nosso jogo: ele se chamada *Road Runner* (corredor de estradas), mas não tem... *UMA ESTRADA*! Não queremos que o nosso carrinho se mexa para tudo quanto é lado livremente, ele precisa andar dentro de uma estrada.
+
+Então, vamos definir uma barreira que o nosso carrinho não possa atravessar. Ele pode ir para frente e para trás o quanto quiser, mas não poderá ultrapassar os pixels 200 e 600 no eixo horizontal. Para isso, precisamos fazer uma pequena alteração no método ```refresh``` da classe ```Car```.
+
+Vamos definir isso fora do ```__main__`` como valores constantes:
+
+```python
+# barreiras laterais
+LEFT_BARRIER = 200
+RIGHT_BARRIER = 600
+```
+
+Depois, vamos alterar o método ```refresh```:
+
+```python
+elif direction == "LEFT" and self.x > LEFT_BARRIER:
+                        # se a posição X for maior
+                        # que a barreira dos 200px
+    self.x -= 5
+elif direction == "RIGHT" and self.x < RIGHT_BARRIER:
+                            # se a posição X for menor
+                            # que a barreira dos 400px
+    self.x += 5
+```
+
+Se executarmos o código, perceberemos que, de fato, o carro não anda, mas não há nenhuma forma de visualizarmos isso. Que tal adicionarmos duas linhas para demarcar a estrada? Vamos definir uma nova constante para a cor da estrada chamada ```ROAD_COLOR```, com os valores RGB(0, 0, 255), fora do ```__main__```.
+
+E antes da função ```show``` do nosso carrinho, dentro do game loop, vamos adicionar mais dois retângulos usando a função ```pygame.draw.rect```:
+
+```python
+pygame.draw.rect(screen, ROAD_COLOR, (LEFT_BARRIER - 20, 0, 20, 600))
+pygame.draw.rect(screen, ROAD_COLOR, (RIGHT_BARRIER + 20, 0, 20, 600))
+```
