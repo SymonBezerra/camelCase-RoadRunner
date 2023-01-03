@@ -20,6 +20,7 @@ class Car(pygame.sprite.Sprite):
     
     # construtor da classe
     def __init__ (self, width, height, color):
+        super(Car, self).__init__()
                         # largura, altura, cor
         
         # transformando os argumentos em atributos da classe Car
@@ -38,18 +39,18 @@ class Car(pygame.sprite.Sprite):
 
     def refresh (self, direction):
         if direction == "UP" and self.y > 0:
-            self.y -= 5
+            self.y -= 10
         elif direction == "DOWN" and self.y < WINDOW_SIZE[1]:
                                     # altura da janela
-            self.y += 5
+            self.y += 10
         elif direction == "LEFT" and self.x > LEFT_BARRIER:
                                 # se a posição X for maior
                                 # que a barreira dos 200px
-            self.x -= 5
+            self.x -= 10
         elif direction == "RIGHT" and self.x < RIGHT_BARRIER:
                                     # se a posição X for menor
                                     # que a barreira dos 400px
-            self.x += 5
+            self.x += 10
         
         # assim, vamos atualizar a posição do nosso retângulo
         self.rect.left = self.x
@@ -60,6 +61,7 @@ class Car(pygame.sprite.Sprite):
 class Obstacle(pygame.sprite.Sprite):
     
     def __init__ (self, width, height, color):
+        super(Obstacle, self).__init__()
         self.width = width
         self.height = height
         self.color = color
@@ -75,10 +77,12 @@ class Obstacle(pygame.sprite.Sprite):
     def refresh (self):
         self.y -= 20
         self.rect.top = self.y
-        
+
 if __name__ == "__main__":
     
     pygame.init()
+
+    obstacles = pygame.sprite.Group()
 
     running = True
 
@@ -109,8 +113,15 @@ if __name__ == "__main__":
         pygame.draw.rect(screen, ROAD_COLOR, (RIGHT_BARRIER + 20, 0, 20, 600))
 
         car.show(screen)
+        obstacles.add(Obstacle(20, 20, FG_COLOR))
+        for obstacle in obstacles:
+            if obstacle.x < 0:
+                obstacles.remove(obstacle)
+            else:
+                obstacle.show(screen)
+                obstacle.refresh()
 
-        clock.tick(30)
+        clock.tick(15)
         pygame.display.flip()
     
     pygame.quit()

@@ -123,13 +123,13 @@ if __name__ == "__main__":
         # enquanto alguma tecla estiver pressionada
         keys = pygame.key.get_pressed()
         if keys[K_UP]:
-            rect_y -= 5
+            rect_y -= 10 # velocidade de 10 px\frame
         elif keys[K_DOWN]:
-            rect_y += 5
+            rect_y += 10 
         elif keys[K_LEFT]:
-            rect_x -= 5
+            rect_x -= 10 
         elif keys[K_RIGHT]:
-            rect_x += 5
+            rect_x += 10 
 
         pygame.draw.rect(screen, (255,255,255), rect=(rect_x, rect_y, 20, 40))
 
@@ -207,6 +207,9 @@ class Car(pygame.sprite.Sprite):
     def __init__ (self, width, height, color):
                         # largura, altura, cor
         
+        # inicializando a superclasse
+        super(Car, self).__init__()
+        
         # transformando os argumentos em atributos da classe Car
         self.width = width
         self.height = height
@@ -227,13 +230,13 @@ class Car(pygame.sprite.Sprite):
 
     def refresh (self, direction):
         if direction == "UP":
-            self.y -= 5
+            self.y -= 10
         elif direction == "DOWN":
-            self.y += 5
+            self.y += 10
         elif direction == "LEFT":
-            self.x -= 5
+            self.x -= 10
         elif direction == "RIGHT":
-            self.x += 5
+            self.x += 10
         
         # assim, vamos atualizar a posição do nosso retângulo
         self.rect.left = self.x
@@ -310,18 +313,18 @@ Depois, vamos alterar o método ```refresh```:
 ```python
 def refresh (self, direction):
     if direction == "UP" and self.y > 0:
-                self.y -= 5
+                self.y -= 10
     elif direction == "DOWN" and self.y < WINDOW_SIZE[1]:
                                 # altura da janela
-        self.y += 5
+        self.y += 10
     elif direction == "LEFT" and self.x > LEFT_BARRIER:
                             # se a posição X for maior
                             # que a barreira dos 200px
-        self.x -= 5
+        self.x -= 10
     elif direction == "RIGHT" and self.x < RIGHT_BARRIER:
                                 # se a posição X for menor
                                 # que a barreira dos 400px
-        self.x += 5
+        self.x += 10
 ```
 
 Se executarmos o código, perceberemos que, de fato, o carro não anda, mas não há nenhuma forma de visualizarmos isso. Que tal adicionarmos duas linhas para demarcar a estrada? Vamos definir uma nova constante para a cor da estrada chamada ```ROAD_COLOR```, com os valores RGB(0, 0, 255), fora do ```__main__```.
@@ -343,6 +346,8 @@ Vamos chamar essa função também de ```refresh``` para a classe ```Obstacle```
 class Obstacle(pygame.sprite.Sprite):
     
     def __init__ (self, width, height, color):
+        super(Obstacle, self).__init__()
+        
         self.width = width
         self.height = height
         self.color = color
@@ -356,7 +361,7 @@ class Obstacle(pygame.sprite.Sprite):
         pygame.draw.rect(surface, self.color, self.rect)
     
     def refresh (self):
-        self.y -= 20
+        self.y -= 20 # velocidade de 20px\frame
         self.rect.top = self.y
 ```
 
