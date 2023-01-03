@@ -188,9 +188,9 @@ class Obstacle(pygame.sprite.Sprite):
 
 A primeira coisa que precisamos definir para o nosso carrinho é um retângulo, e suas coordenadas — igual fizemos com o nosso retângulo lá embaixo. 
 
-Depois disso vamos criar duas funções: ```show```, que vai desenhar o nosso carrinho na tela; e ```refresh```, que vai atualizar a posição dele a cada frame.
+Depois disso vamos criar duas funções: ```show```, que vai desenhar o nosso carrinho na tela; e ```refresh```, que será executada a cada frame para atualizar a sua posição.
 
-*Obs.:* no framework Unity, a função "refresh" levaria o nome de ```update```. Porém, no Pygame, já existe uma função "update" utilizada para outra tarefa, então vamos utilizar outro nome para evitar confusões.
+*Obs.:* no framework Unity, por exemplo, a função "refresh" levaria o nome de ```update```. Porém, no Pygame, já existe uma função "update" utilizada para outra tarefa, então vamos utilizar outro nome para evitar confusões.
 
 O nosso código ficará assim:
 
@@ -213,17 +213,62 @@ class Car(pygame.sprite.Sprite):
 
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
-        def show (self, surface):
-                        # superfície (onde será desenhado o retângulo)
-            surface.blit(self.rect, (self.x, self.y))
+    def show (self, surface):
+                    # superfície (onde será desenhado o retângulo)
+        # blit: desenha uma imagem sobre outra
+        surface.blit(surface, self.rect)
+                    # desenhar sobre ela mesma o retângulo
 
-        def refresh (self, direction):
-            if direction == "UP":
-                self.y -= 5
-            elif direction == "DOWN":
-                self.y += 5
-            elif direction == "LEFT":
-                self.x -= 5
-            elif direction == "RIGHT":
-                self.x += 5
+    def refresh (self, direction):
+        if direction == "UP":
+            self.y -= 5
+        elif direction == "DOWN":
+            self.y += 5
+        elif direction == "LEFT":
+            self.x -= 5
+        elif direction == "RIGHT":
+            self.x += 5
+```
+
+Percebeu que o funcionamento dessas funções é bem parecido com o código que escrevemos anteriormente? A única diferença maior é que não estamos utilizando a função ```draw```, e sim o método ```blit```, pertencente ao objeto de superfície do Pygame. Assim, passaremos como argumento desta função a nossa tela principal, e ela desenhará sobre ela mesma o retângulo pertencente ao sprite do carrinho. 
+
+Para isso, vamos definir uma instância da classe ```Car``` dentro do ```__main```, e substituir o código que fizemos antes pelas novas funções ```show``` e ```refresh```.
+
+O código dentro do ```__main__``` ficará da seguinte maneira:
+
+```python
+if __name__ == "__main__":
+    
+    pygame.init()
+
+    running = True
+
+    car = Car(20, 50, FG_COLOR)
+
+    while running:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        # função para executar comandos
+        # enquanto alguma tecla estiver pressionada
+        keys = pygame.key.get_pressed()
+        if keys[K_UP]:
+            car.refresh("UP")
+        elif keys[K_DOWN]:
+            car.refresh("DOWN")
+        elif keys[K_LEFT]:
+            car.refresh("LEFT")
+        elif keys[K_RIGHT]:
+            car.refresh("RIGHT")
+
+        screen.fill(BG_COLOR)
+
+        car.show(screen)
+
+        clock.tick(30)
+        pygame.display.flip()
+    
+    pygame.quit()
 ```

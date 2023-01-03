@@ -25,19 +25,19 @@ class Car(pygame.sprite.Sprite):
 
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
-        def show (self, surface):
-                        # superfície (onde será desenhado o retângulo)
-            surface.blit(self.rect, (self.x, self.y))
+    def show (self, surface):
+                    # superfície (onde será desenhado o retângulo)
+        surface.blit(surface, self.rect)
 
-        def refresh (self, direction):
-            if direction == "UP":
-                self.y -= 5
-            elif direction == "DOWN":
-                self.y += 5
-            elif direction == "LEFT":
-                self.x -= 5
-            elif direction == "RIGHT":
-                self.x += 5
+    def refresh (self, direction):
+        if direction == "UP":
+            self.y -= 5
+        elif direction == "DOWN":
+            self.y += 5
+        elif direction == "LEFT":
+            self.x -= 5
+        elif direction == "RIGHT":
+            self.x += 5
             
 
 class Obstacle(pygame.sprite.Sprite):
@@ -49,8 +49,7 @@ if __name__ == "__main__":
 
     running = True
 
-    rect_x = 400
-    rect_y = 300
+    car = Car(20, 50, FG_COLOR)
 
     while running:
 
@@ -62,17 +61,17 @@ if __name__ == "__main__":
         # enquanto alguma tecla estiver pressionada
         keys = pygame.key.get_pressed()
         if keys[K_UP]:
-            rect_y -= 5
+            car.refresh("UP")
         elif keys[K_DOWN]:
-            rect_y += 5
+            car.refresh("DOWN")
         elif keys[K_LEFT]:
-            rect_x -= 5
+            car.refresh("LEFT")
         elif keys[K_RIGHT]:
-            rect_x += 5
+            car.refresh("RIGHT")
 
         screen.fill(BG_COLOR)
 
-        pygame.draw.rect(screen, FG_COLOR, rect=(rect_x, rect_y, 20, 40))
+        car.show(screen)
 
         clock.tick(30)
         pygame.display.flip()
