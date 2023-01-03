@@ -113,7 +113,7 @@ if __name__ == "__main__":
         pygame.draw.rect(screen, ROAD_COLOR, (RIGHT_BARRIER + 20, 0, 20, 600))
 
         car.show(screen)
-        obstacles.add(Obstacle(20, 20, FG_COLOR))
+        obstacles.add(Obstacle(20, 20, OBSTACLE_COLOR))
         for obstacle in obstacles:
             if obstacle.x < 0:
                 obstacles.remove(obstacle)
