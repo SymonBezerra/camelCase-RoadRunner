@@ -89,6 +89,8 @@ Além disso, vamos realizar mais alguns ```import```'s para recebermos as consta
 
 E adicionaremos mais uma função chamada ```pygame.key.get_pressed()```. Assim, enquanto alguma tecla for pressionada, será realizado um comando. Caso isto fosse feito no loop ```for``` que está fechando o nosso jogo, o nosso retângulo só se movimentaria a cada vez que a tecla fosse pressionada.
 
+Outra coisa que vamos adicionar é um ```pygame.time.Clock```. Este objeto será guardado dentro de uma variável e servirá para definir o *framerate*, isto é, a taxa de quadros do nosso jogo, que também afetará sua velocidade. Logo antes da função ```flip```, chamaremos a função ```clock.tick(30)```, acertando a taxa de quadros no máximo de 30 FPS (frames por segundo).
+
 ```python
 import pygame
 # setas do teclado + tecla pressionada
@@ -131,6 +133,27 @@ if __name__ == "__main__":
     pygame.quit()
 ```
 
-Agora o nosso "carrinho" consegue se mexer, mas tem um pequeno detalhe... Agora temos vários dele na nossa tela!
+Agora o nosso "carrinho" consegue se mexer, mas tem um pequeno detalhe... *Agora temos vários dele na nossa tela!*
 
 ![](/tutorial/imagem_2.png)
+
+## Corrigindo o bug
+
+Calma, não há o que temer! Isso acontece porque nós simplesmente estamos desenhando outro carrinho na tela, e não fizemos nada com o outro que já estava lá. Notou que há um fundo preto na nossa tela? Então, *esse fundo não é exatamente preto*. Na verdade, ele está vazio, e o computador simplesmente preencheu ele com uma cor padrão para "nada" (neste caso, o preto). 
+
+Uma solução simples para isso é preenchermos a tela com um fundo preto a cada *frame* (lembra do conceito de frame que vimos antes?), assim o carrinho anterior também vai embora junto. E que tal tirarmos as cores e deixarmos guardadas em constantes? Assim, não vamos precisar alterar cada função quando quisermos mudá-las.
+
+Então, vamos definir, fora do ```__main__```, dois valores constantes (em Python, por convenção, constantes têm seu nome escrito em caixa alta):
+
+```python
+BG_COLOR = (0, 0, 0) # "BG" = "background", fundo; RGB para preto
+FG_COLOR = (255, 255, 255) # FG = "foreground", principal; RGB para branco
+
+# assim, podemos alterar apenas o valor destas constantes e utilizá-las no resto do código!
+```
+
+E lá no nosso game loop, vamos adicionar a função ```fill```, que vai preencher a tela inteira, neste caso, com a cor de fundo que nós definimos:
+
+```python
+
+```

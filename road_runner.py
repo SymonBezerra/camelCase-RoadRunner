@@ -4,6 +4,9 @@ from pygame.locals import K_UP, K_DOWN, K_RIGHT, K_LEFT, KEYDOWN
 screen = pygame.display.set_mode([800,600])
 clock = pygame.time.Clock()
 
+BG_COLOR = (0,0,0)
+FG_COLOR = (255,255,255)
+
 if __name__ == "__main__":
     
     pygame.init()
@@ -31,7 +34,9 @@ if __name__ == "__main__":
         elif keys[K_RIGHT]:
             rect_x += 5
 
-        pygame.draw.rect(screen, (255,255,255), rect=(rect_x, rect_y, 20, 40))
+        screen.fill(BG_COLOR)
+
+        pygame.draw.rect(screen, FG_COLOR, rect=(rect_x, rect_y, 20, 40))
 
         clock.tick(30)
         pygame.display.flip()
