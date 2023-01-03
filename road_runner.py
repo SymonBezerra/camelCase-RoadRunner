@@ -15,7 +15,7 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 running = False
 
-        pygame.draw.rect(screen, (255,255,255), rect=(400, 300, 50, 50))
+        pygame.draw.rect(screen, (255,255,255), rect=(400, 300, 20, 40))
 
         pygame.display.flip()
     
