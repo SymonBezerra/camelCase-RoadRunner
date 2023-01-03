@@ -1,7 +1,9 @@
 import pygame
 # setas do teclado + tecla pressionada
-from pygame.locals import K_UP, K_DOWN, K_RIGHT, K_LEFT, KEYDOWN
-screen = pygame.display.set_mode([800, 600])
+from pygame.locals import K_UP, K_DOWN, K_RIGHT, K_LEFT
+WINDOW_SIZE = [800, 600]
+            # largura x altura
+screen = pygame.display.set_mode(WINDOW_SIZE)
 clock = pygame.time.Clock()
 
 BG_COLOR = (0,0,0)
@@ -26,7 +28,7 @@ class Car(pygame.sprite.Sprite):
 
         # coordenadas X e Y iniciais do nosso retângulo
         self.x = 400
-        self.y = 300
+        self.y = 20
 
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
@@ -34,9 +36,10 @@ class Car(pygame.sprite.Sprite):
         pygame.draw.rect(surface, self.color, self.rect)
 
     def refresh (self, direction):
-        if direction == "UP":
+        if direction == "UP" and self.y > 0:
             self.y -= 5
-        elif direction == "DOWN":
+        elif direction == "DOWN" and self.y < WINDOW_SIZE[1]:
+                                    # altura da janela
             self.y += 5
         elif direction == "LEFT" and self.x > LEFT_BARRIER:
                                 # se a posição X for maior

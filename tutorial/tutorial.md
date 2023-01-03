@@ -287,11 +287,19 @@ if __name__ == "__main__":
 
 Agora, vamos resolver mais um problema do nosso jogo: ele se chamada *Road Runner* (corredor de estradas), mas não tem... *UMA ESTRADA*! Não queremos que o nosso carrinho se mexa para tudo quanto é lado livremente, ele precisa andar dentro de uma estrada.
 
-Então, vamos definir uma barreira que o nosso carrinho não possa atravessar. Ele pode ir para frente e para trás o quanto quiser, mas não poderá ultrapassar os pixels 200 e 600 no eixo horizontal. Para isso, precisamos fazer uma pequena alteração no método ```refresh``` da classe ```Car```.
+Então, vamos definir uma barreira que o nosso carrinho não possa atravessar. Ele pode ir para frente e para trás o quanto quiser, mas não poderá ultrapassar os pixels 200 e 600 no eixo horizontal. Além disso, não podemos deixar que o nosso carrinho saia da tela! Então precisamos limitar a posição dele entre os pixels 0 e 600 no eixo horizontal (caso contrário, ele continuará a se movimentar, porém fora da tela).
+
+Para isso, precisamos fazer uma pequena alteração no método ```refresh``` da classe ```Car```.
 
 Vamos definir isso fora do ```__main__`` como valores constantes:
 
 ```python
+# vamos aproveitar e colocar o tamanho da janela
+# em uma constante também!
+WINDOW_SIZE = [800, 600]
+screen = pygame.display.set_mode(WINDOW_SIZE)
+
+...
 # barreiras laterais
 LEFT_BARRIER = 200
 RIGHT_BARRIER = 600
@@ -300,14 +308,20 @@ RIGHT_BARRIER = 600
 Depois, vamos alterar o método ```refresh```:
 
 ```python
-elif direction == "LEFT" and self.x > LEFT_BARRIER:
-                        # se a posição X for maior
-                        # que a barreira dos 200px
-    self.x -= 5
-elif direction == "RIGHT" and self.x < RIGHT_BARRIER:
-                            # se a posição X for menor
-                            # que a barreira dos 400px
-    self.x += 5
+def refresh (self, direction):
+    if direction == "UP" and self.y > 0:
+                self.y -= 5
+    elif direction == "DOWN" and self.y < WINDOW_SIZE[1]:
+                                # altura da janela
+        self.y += 5
+    elif direction == "LEFT" and self.x > LEFT_BARRIER:
+                            # se a posição X for maior
+                            # que a barreira dos 200px
+        self.x -= 5
+    elif direction == "RIGHT" and self.x < RIGHT_BARRIER:
+                                # se a posição X for menor
+                                # que a barreira dos 400px
+        self.x += 5
 ```
 
 Se executarmos o código, perceberemos que, de fato, o carro não anda, mas não há nenhuma forma de visualizarmos isso. Que tal adicionarmos duas linhas para demarcar a estrada? Vamos definir uma nova constante para a cor da estrada chamada ```ROAD_COLOR```, com os valores RGB(0, 0, 255), fora do ```__main__```.
