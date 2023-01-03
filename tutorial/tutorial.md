@@ -75,6 +75,8 @@ pygame.display.flip()
 
 Isto é, passamos a função ```draw.rect``` da biblioteca uma superfície onde será desenhado o retângulo, a sua cor em RGB (neste caso, branco), e um objeto do tipo retângulo, que receberá como argumentos uma coordenada X, uma coordenada Y, largura e altura. Ou seja, ao passarmos a tupla ```(400, 300, 20, 40)```, o nosso retângulo será desenhado no ponto (400,300) da nossa tela, e terá um tamanho de 20x40.
 
+Por fim, a função ```flip``` atualizará toda a tela ao final deste ciclo.
+
 O resultado será como na imagem a seguir:
 
 ![](/tutorial/imagem_1.png)
