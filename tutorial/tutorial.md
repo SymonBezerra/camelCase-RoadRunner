@@ -352,7 +352,7 @@ class Obstacle(pygame.sprite.Sprite):
         self.height = height
         self.color = color
 
-        self.x = randint(200, 600)
+        self.x = 200 + (randint(0,20) * 20)
         self.y = 600
 
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
@@ -365,7 +365,7 @@ class Obstacle(pygame.sprite.Sprite):
         self.rect.top = self.y
 ```
 
-A única coisa que não utilizamos aqui antes foi a função ```randint```, da biblioteca ```random```. Para importá-la, coloque o código ```from random import randint``` junto aos imports que fizemos antes. Assim, a coordenada inicial X será um número inteiro aleatório entre 200 e 600, criando assim um jogo mais interessante, onde as peças não se encaixam simplesmente em um "grid".
+A única coisa que não utilizamos aqui antes foi a função ```randint```, da biblioteca ```random```. Para importá-la, coloque o código ```from random import randint``` junto aos imports que fizemos antes. Assim, a coordenada inicial X será um múltiplo de 20 entre 200 e 600, fazendo com que os obstáculos estejam em uma espécie de "grid", facilitando o desafio.
 
 Vamos adicionar também uma constante ```OBSTACLE_COLOR```, de valor RGB(255, 255, 0). Assim, todos os obstáculos terão a cor amarela, diferenciando-se dos demais elementos.
 

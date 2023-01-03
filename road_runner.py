@@ -66,7 +66,7 @@ class Obstacle(pygame.sprite.Sprite):
         self.height = height
         self.color = color
 
-        self.x = randint(200, 600)
+        self.x = 200 + (randint(0,20) * 20)
         self.y = 600
 
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
