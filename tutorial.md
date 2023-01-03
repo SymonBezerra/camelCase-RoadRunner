@@ -6,11 +6,11 @@
 
 ##### Ao começarmos o nosso código, vamos importar a biblioteca Pygame e inicializá-la em nosso programa: #####
 
-´´´python
+```python
 import pygame
 
 if __name__ == "__main__":
     # aqui definimos a função principal a ser executada
     # pelo interpretador Python
     pygame.init()
-´´´
+```
