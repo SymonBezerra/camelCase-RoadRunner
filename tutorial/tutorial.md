@@ -63,8 +63,6 @@ for event in pygame.event.get():
 
 Neste loop ```for```, o programa irá alterar o valor da nossa variável ```running``` para ```False```, fazendo com que o programa caia na linha de código com a função ```pygame.quit()```, encerrando o programa. Não queremos um jogo que rode para sempre, não é?
 
-*Atenção para esta parte do nosso código*: logo mais, vamos receber a entrada para os comandos que movimentarão o nosso carrinho!
-
 Para desenhar um quadrado na tela, vamos utilizar a função ```pygame.draw.rect``` da seguinte forma:
 
 ```python
@@ -85,15 +83,18 @@ O resultado será como na imagem a seguir:
 
 Para adicionarmos a movimentação, vamos retirar as coordenadas (400,300) para duas variáveis, que chamaremos de ```rect_x``` e ```rect_y```:
 
-*Atenção*: é importante que estas variáveis estejam definidas ANTES do loop ```for``` que recebe os comandos do usuário.
+*Atenção*: é importante que estas variáveis estejam definidas FORA do game loop.
 
 Além disso, vamos realizar mais alguns ```import```'s para recebermos as constantes da biblioteca Pygame equivalentes ao comando das setas do teclado. E vamos incluir isso no game loop, da seguinte maneira:
+
+E adicionaremos mais uma função chamada ```pygame.key.get_pressed()```. Assim, enquanto alguma tecla for pressionada, será realizado um comando. Caso isto fosse feito no loop ```for``` que está fechando o nosso jogo, o nosso retângulo só se movimentaria a cada vez que a tecla fosse pressionada.
 
 ```python
 import pygame
 # setas do teclado + tecla pressionada
 from pygame.locals import K_UP, K_DOWN, K_RIGHT, K_LEFT, KEYDOWN
 screen = pygame.display.set_mode([800,600])
+clock = pygame.time.Clock()
 
 if __name__ == "__main__":
     
@@ -101,32 +102,35 @@ if __name__ == "__main__":
 
     running = True
 
+    rect_x = 400
+    rect_y = 300
+
     while running:
-        rect_x = 400
-        rect_y = 300
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            # em caso de tecla pressionada
-            elif event.type == KEYDOWN:
-                # seta para cima
-                if event.key == K_UP:
-                    rect_y -= 5 
-                # seta para baixo
-                elif event.key == K_DOWN:
-                    rect_y += 5
-                # seta para esquerda
-                elif event.key == K_LEFT:
-                    rect_x -= 5
-                # seta para direita
-                elif event.key == K_RIGHT:
-                    rect_x += 5
 
+        # função para executar comandos
+        # enquanto alguma tecla estiver pressionada
+        keys = pygame.key.get_pressed()
+        if keys[K_UP]:
+            rect_y -= 5
+        elif keys[K_DOWN]:
+            rect_y += 5
+        elif keys[K_LEFT]:
+            rect_x -= 5
+        elif keys[K_RIGHT]:
+            rect_x += 5
 
         pygame.draw.rect(screen, (255,255,255), rect=(rect_x, rect_y, 20, 40))
 
+        clock.tick(30)
         pygame.display.flip()
     
     pygame.quit()
 ```
+
+Agora o nosso "carrinho" consegue se mexer, mas tem um pequeno detalhe... Agora temos vários dele na nossa tela!
+
+![](/tutorial/imagem_2.png)
