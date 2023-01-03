@@ -228,9 +228,13 @@ class Car(pygame.sprite.Sprite):
             self.x -= 5
         elif direction == "RIGHT":
             self.x += 5
+        
+        # assim, vamos atualizar a posição do nosso retângulo
+        self.rect.left = self.x
+        self.rect.top = self.y
 ```
 
-Percebeu que o funcionamento dessas funções é bem parecido com o código que escrevemos anteriormente? A única diferença maior é que não estamos utilizando a função ```draw```, e sim o método ```blit```, pertencente ao objeto de superfície do Pygame. Assim, passaremos como argumento desta função a nossa tela principal, e ela desenhará sobre ela mesma o retângulo pertencente ao sprite do carrinho. 
+Percebeu que o funcionamento dessas funções é bem parecido com o código que escrevemos anteriormente? 
 
 Para isso, vamos definir uma instância da classe ```Car``` dentro do ```__main```, e substituir o código que fizemos antes pelas novas funções ```show``` e ```refresh```.
 

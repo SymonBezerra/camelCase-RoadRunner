@@ -16,8 +16,7 @@ class Car(pygame.sprite.Sprite):
         # transformando os argumentos em atributos da classe Car
         self.width = width
         self.height = height
-        # não vamos fazer o mesmo com color, porque este argumento
-        # só será utilizado para construir o retângulo do carrinho
+        self.color = color
 
         # coordenadas X e Y iniciais do nosso retângulo
         self.x = 400
@@ -26,8 +25,7 @@ class Car(pygame.sprite.Sprite):
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
     def show (self, surface):
-                    # superfície (onde será desenhado o retângulo)
-        surface.blit(surface, self.rect)
+        pygame.draw.rect(surface, self.color, self.rect)
 
     def refresh (self, direction):
         if direction == "UP":
@@ -38,6 +36,11 @@ class Car(pygame.sprite.Sprite):
             self.x -= 5
         elif direction == "RIGHT":
             self.x += 5
+        
+        # assim, vamos atualizar a posição do nosso retângulo
+        self.rect.left = self.x
+        self.rect.top = self.y
+        
             
 
 class Obstacle(pygame.sprite.Sprite):
@@ -59,6 +62,9 @@ if __name__ == "__main__":
 
         # função para executar comandos
         # enquanto alguma tecla estiver pressionada
+
+        screen.fill(BG_COLOR)
+
         keys = pygame.key.get_pressed()
         if keys[K_UP]:
             car.refresh("UP")
@@ -68,8 +74,6 @@ if __name__ == "__main__":
             car.refresh("LEFT")
         elif keys[K_RIGHT]:
             car.refresh("RIGHT")
-
-        screen.fill(BG_COLOR)
 
         car.show(screen)
 
