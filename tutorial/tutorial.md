@@ -163,3 +163,13 @@ pygame.draw.rect(screen, FG_COLOR, rect=(rect_x, rect_y, 20, 40))
 ```
 
 Agora sim: o nosso carrinho pode se mexer sem deixar um rastro branco na tela!
+
+## Introduzindo a classe Sprite
+
+Porém, ainda temos muito o que fazer! Ainda precisamos definir as funções de colisão do nosso carrinho, os obstáculos que caem na tela, criar uma estrada para ele... Vocês ainda estão aí? 
+
+Calma, não vai levar dias para criar este código. E para isso, vamos introduzir uma classe da biblioteca Pygame chamada ```Sprite```. Se você sabe o mínimo de jogos 2D, sabe que as imagens que possuem interação com o jogo são chamadas de *sprites* (se pronuncia /spɹaɪt/). E além disso, vamos utilizar o paradigma de orientação a objetos, que vai nos ajudar muito a organizar isto aqui.
+
+Dentro da biblioteca Pygame, é até possível criar funções de detecção de colisão apenas desenhando retângulos e comparando as suas coordenadas. Porém, vamos acelerar as coisas utilizando os sprites da biblioteca. 
+
+Para isso, vamos começar criando uma classe ```Car```, que terá relação de herança com a classe ```Sprite```, fora do nosso ```__main__```:
