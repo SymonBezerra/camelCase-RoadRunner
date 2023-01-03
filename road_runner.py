@@ -1,4 +1,5 @@
 import pygame
+from random import randint
 # setas do teclado + tecla pressionada
 from pygame.locals import K_UP, K_DOWN, K_RIGHT, K_LEFT
 WINDOW_SIZE = [800, 600]
@@ -57,8 +58,24 @@ class Car(pygame.sprite.Sprite):
             
 
 class Obstacle(pygame.sprite.Sprite):
-    pass
+    
+    def __init__ (self, width, height, color):
+        self.width = width
+        self.height = height
+        self.color = color
 
+        self.x = randint(200, 600)
+        self.y = 600
+
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+    def show (self, surface):
+        pygame.draw.rect(surface, self.color, self.rect)
+    
+    def refresh (self):
+        self.y -= 20
+        self.rect.top = self.y
+        
 if __name__ == "__main__":
     
     pygame.init()

@@ -332,3 +332,34 @@ E antes da função ```show``` do nosso carrinho, dentro do game loop, vamos adi
 pygame.draw.rect(screen, ROAD_COLOR, (LEFT_BARRIER - 20, 0, 20, 600))
 pygame.draw.rect(screen, ROAD_COLOR, (RIGHT_BARRIER + 20, 0, 20, 600))
 ```
+
+## Adicionando obstáculos e colisão
+
+Para finalizarmos, precisamos adicionar a classe para os nossos obstáculos. Bom, ela é idêntica ao nosso carro, porém com uma diferença: ao invés de se movimentar para as quatro direções, ela apenas se movimenta para cima, já que a nossa estrada vai aparecendo em um esquema de rolagem. 
+
+Vamos chamar essa função também de ```refresh``` para a classe ```Obstacle```. No restante, ela será idêntica à classe ```Car```.
+
+```python
+class Obstacle(pygame.sprite.Sprite):
+    
+    def __init__ (self, width, height, color):
+        self.width = width
+        self.height = height
+        self.color = color
+
+        self.x = randint(200, 600)
+        self.y = 600
+
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+    def show (self, surface):
+        pygame.draw.rect(surface, self.color, self.rect)
+    
+    def refresh (self):
+        self.y -= 20
+        self.rect.top = self.y
+```
+
+A única coisa que não utilizamos aqui antes foi a função ```randint```, da biblioteca ```random```. Para importá-la, coloque o código ```from random import randint``` junto aos imports que fizemos antes. Assim, a coordenada inicial X será um número inteiro aleatório entre 200 e 600, criando assim um jogo mais interessante, onde as peças não se encaixam simplesmente em um "grid".
+
+Vamos adicionar também uma constante ```OBSTACLE_COLOR```, de valor RGB(255, 255, 0). Assim, todos os obstáculos terão a cor amarela, diferenciando-se dos demais elementos.
