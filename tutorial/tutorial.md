@@ -327,7 +327,7 @@ def refresh (self, direction):
         self.x += 10
 ```
 
-Se executarmos o código, perceberemos que, de fato, o carro não anda, mas não há nenhuma forma de visualizarmos isso. Que tal adicionarmos duas linhas para demarcar a estrada? Vamos definir uma nova constante para a cor da estrada chamada ```ROAD_COLOR```, com os valores RGB(0, 0, 255), fora do ```__main__```.
+Se executarmos o código, perceberemos que, de fato, o carro não anda para além das barreiras que definimos, mas não há nenhuma forma de visualizarmos isso. Que tal adicionarmos duas linhas para demarcar a estrada? Vamos definir uma nova constante para a cor da estrada chamada ```ROAD_COLOR```, com os valores RGB(0, 0, 255), fora do ```__main__```.
 
 E antes da função ```show``` do nosso carrinho, dentro do game loop, vamos adicionar mais dois retângulos usando a função ```pygame.draw.rect```:
 
