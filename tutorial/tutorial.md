@@ -4,7 +4,7 @@ Neste tutorial, vamos aprender como implementar o jogo "Road Runner", desenvolvi
 
 O jogo foi desenvolvido pelos gêmeos Andrew e Philip Oliver, para um computador doméstico de 8 bits chamado *Dragon 32*, quando eles ainda eram adolescentes. O jogo consiste em um carrinho que percorre uma estrada e desvia de obstáculos gerados aleatoriamente. O código original foi publicado em uma revista inglesa chamada *Computer & Video Games*, e pode ser conferido [neste arquivo do GitHub](https://github.com/arhneu/road-runner/blob/master/road-runner.bas).
 
-![Imagem do jogo original](/tutorial/tutorial/print_road_runner.png)
+![Imagem do jogo original](/tutorial/print_road_runner.png)
 
 Para isso, é necessário fazermos a instalação da biblioteca através do gerenciador de pacotes do Python, o PIP.
 Ao começarmos o nosso código, vamos importar a biblioteca Pygame e inicializá-la em nosso programa: 
