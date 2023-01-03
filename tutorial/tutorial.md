@@ -172,4 +172,16 @@ Calma, não vai levar dias para criar este código. E para isso, vamos introduzi
 
 Dentro da biblioteca Pygame, é até possível criar funções de detecção de colisão apenas desenhando retângulos e comparando as suas coordenadas. Porém, vamos acelerar as coisas utilizando os sprites da biblioteca. 
 
-Para isso, vamos começar criando uma classe ```Car```, que terá relação de herança com a classe ```Sprite```, fora do nosso ```__main__```:
+Para isso, vamos começar criando uma classe ```Car```, que terá relação de herança com a classe ```Sprite```, fora do nosso ```__main__```. Vamos aproveitar e também criar uma classe ```Obstacle```, que servirá para os obstáculos da nossa estrada. Mas não vamos nos preocupar com ela por enquanto.
+
+O nosso código ficará assim:
+
+```python
+class Car(pygame.sprite.Sprite):
+    # no Python, a herança é sinalizada ao colocarmos
+    # o nome da superclasse entre parênteses
+    pass # nada aqui por enquanto
+
+class Obstacle(pygame.sprite.Sprite):
+    pass
+```

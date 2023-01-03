@@ -7,6 +7,14 @@ clock = pygame.time.Clock()
 BG_COLOR = (0,0,0)
 FG_COLOR = (255,255,255)
 
+class Car(pygame.sprite.Sprite):
+    # no Python, a herança é sinalizada ao colocarmos
+    # o nome da superclasse entre parênteses
+    pass # nada aqui por enquanto
+
+class Obstacle(pygame.sprite.Sprite):
+    pass
+
 if __name__ == "__main__":
     
     pygame.init()
