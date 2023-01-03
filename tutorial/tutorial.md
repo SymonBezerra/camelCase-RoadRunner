@@ -80,3 +80,12 @@ Por fim, a função ```flip``` atualizará toda a tela ao final deste ciclo.
 O resultado será como na imagem a seguir:
 
 ![](/tutorial/imagem_1.png)
+
+## Adicionando a Movimentação
+
+Para adicionarmos a movimentação, vamos retirar as coordenadas (400,300) para duas variáveis, que chamaremos de ```rect_x``` e ```rect_y```:
+
+*Atenção*: é importante que estas variáveis estejam definidas ANTES do loop ```for``` que recebe os comandos do usuário.
+
+Além disso, vamos realizar mais alguns ```import```'s para recebermos as constantes da biblioteca Pygame equivalentes ao comando das setas do teclado. E vamos incluir isso no game loop, da seguinte maneira:
+
