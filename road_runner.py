@@ -8,9 +8,37 @@ BG_COLOR = (0,0,0)
 FG_COLOR = (255,255,255)
 
 class Car(pygame.sprite.Sprite):
-    # no Python, a herança é sinalizada ao colocarmos
-    # o nome da superclasse entre parênteses
-    pass # nada aqui por enquanto
+    
+    # construtor da classe
+    def __init__ (self, width, height, color):
+                        # largura, altura, cor
+        
+        # transformando os argumentos em atributos da classe Car
+        self.width = width
+        self.height = height
+        # não vamos fazer o mesmo com color, porque este argumento
+        # só será utilizado para construir o retângulo do carrinho
+
+        # coordenadas X e Y iniciais do nosso retângulo
+        self.x = 400
+        self.y = 300
+
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+        def show (self, surface):
+                        # superfície (onde será desenhado o retângulo)
+            surface.blit(self.rect, (self.x, self.y))
+
+        def refresh (self, direction):
+            if direction == "UP":
+                self.y -= 5
+            elif direction == "DOWN":
+                self.y += 5
+            elif direction == "LEFT":
+                self.x -= 5
+            elif direction == "RIGHT":
+                self.x += 5
+            
 
 class Obstacle(pygame.sprite.Sprite):
     pass

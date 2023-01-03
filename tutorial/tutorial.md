@@ -168,7 +168,7 @@ Agora sim: o nosso carrinho pode se mexer sem deixar um rastro branco na tela!
 
 Porém, ainda temos muito o que fazer! Ainda precisamos definir as funções de colisão do nosso carrinho, os obstáculos que caem na tela, criar uma estrada para ele... Vocês ainda estão aí? 
 
-Calma, não vai levar dias para criar este código. E para isso, vamos introduzir uma classe da biblioteca Pygame chamada ```Sprite```. Se você sabe o mínimo de jogos 2D, sabe que as imagens que possuem interação com o jogo são chamadas de *sprites* (se pronuncia /spɹaɪt/). E além disso, vamos utilizar o paradigma de orientação a objetos, que vai nos ajudar muito a organizar isto aqui.
+Muita hora nessa calma, porque não vai levar dias para criar este código. E para isso, vamos introduzir uma classe da biblioteca Pygame chamada ```Sprite```. Se você sabe o mínimo de jogos 2D, sabe que as imagens que possuem interação com o jogo são chamadas de *sprites* (se pronuncia /spɹaɪt/). E além disso, vamos utilizar o paradigma de orientação a objetos, que vai nos ajudar muito a organizar isto aqui.
 
 Dentro da biblioteca Pygame, é até possível criar funções de detecção de colisão apenas desenhando retângulos e comparando as suas coordenadas. Porém, vamos acelerar as coisas utilizando os sprites da biblioteca. 
 
@@ -185,3 +185,10 @@ class Car(pygame.sprite.Sprite):
 class Obstacle(pygame.sprite.Sprite):
     pass
 ```
+
+A primeira coisa que precisamos definir para o nosso carrinho é um retângulo, e suas coordenadas — igual fizemos com o nosso retângulo lá embaixo. 
+
+Depois disso vamos criar duas funções: ```show```, que vai desenhar o nosso carrinho na tela; e ```refresh```, que vai atualizar a posição dele a cada frame.
+
+*Obs.:* no framework Unity, a função "refresh" levaria o nome de ```update```. Porém, no Pygame, já existe uma função "update" utilizada para outra tarefa, então vamos utilizar outro nome para evitar confusões.
+
