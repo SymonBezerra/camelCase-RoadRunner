@@ -100,7 +100,7 @@ Outra coisa que vamos adicionar é um ```pygame.time.Clock```. Este objeto será
 ```python
 import pygame
 # setas do teclado + tecla pressionada
-from pygame.locals import K_UP, K_DOWN, K_RIGHT, K_LEFT, KEYDOWN
+from pygame.locals import K_UP, K_DOWN, K_RIGHT, K_LEFT
 screen = pygame.display.set_mode([800, 600])
 clock = pygame.time.Clock()
 
