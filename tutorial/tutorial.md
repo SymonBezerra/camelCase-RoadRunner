@@ -194,9 +194,7 @@ class Obstacle(pygame.sprite.Sprite):
 
 A primeira coisa que precisamos definir para o nosso carrinho é um retângulo, e suas coordenadas — igual fizemos com o nosso retângulo lá embaixo. 
 
-Depois disso vamos criar duas funções: ```show```, que vai desenhar o nosso carrinho na tela; e ```refresh```, que será executada a cada frame para atualizar a sua posição.
-
-*Obs.:* no framework Unity, por exemplo, a função "refresh" levaria o nome de ```update```. Porém, no Pygame, já existe uma função "update" utilizada para outra tarefa, então vamos utilizar outro nome para evitar confusões.
+Depois disso vamos criar duas funções: ```show```, que vai desenhar o nosso carrinho na tela; e ```update```, que será executada a cada frame para atualizar a sua posição.
 
 O nosso código ficará assim:
 
@@ -228,7 +226,7 @@ class Car(pygame.sprite.Sprite):
         surface.blit(surface, self.rect)
                     # desenhar sobre ela mesma o retângulo
 
-    def refresh (self, direction):
+    def update (self, direction):
         if direction == "UP":
             self.y -= 10
         elif direction == "DOWN":
@@ -245,7 +243,7 @@ class Car(pygame.sprite.Sprite):
 
 Percebeu que o funcionamento dessas funções é bem parecido com o código que escrevemos anteriormente? 
 
-Para isso, vamos definir uma instância da classe ```Car``` dentro do ```__main```, e substituir o código que fizemos antes pelas novas funções ```show``` e ```refresh```.
+Para isso, vamos definir uma instância da classe ```Car``` dentro do ```__main```, e substituir o código que fizemos antes pelas novas funções ```show``` e ```update```.
 
 O código dentro do ```__main__``` ficará da seguinte maneira:
 
@@ -268,13 +266,13 @@ if __name__ == "__main__":
         # enquanto alguma tecla estiver pressionada
         keys = pygame.key.get_pressed()
         if keys[K_UP]:
-            car.refresh("UP")
+            car.update("UP")
         elif keys[K_DOWN]:
-            car.refresh("DOWN")
+            car.update("DOWN")
         elif keys[K_LEFT]:
-            car.refresh("LEFT")
+            car.update("LEFT")
         elif keys[K_RIGHT]:
-            car.refresh("RIGHT")
+            car.update("RIGHT")
 
         screen.fill(BG_COLOR)
 
@@ -292,7 +290,7 @@ Agora, vamos resolver mais um problema do nosso jogo: ele se chamada *Road Runne
 
 Então, vamos definir uma barreira que o nosso carrinho não possa atravessar. Ele pode ir para frente e para trás o quanto quiser, mas não poderá ultrapassar os pixels 200 e 600 no eixo horizontal. Além disso, não podemos deixar que o nosso carrinho saia da tela! Então precisamos limitar a posição dele entre os pixels 0 e 600 no eixo horizontal (caso contrário, ele continuará a se movimentar, porém fora da tela).
 
-Para isso, precisamos fazer uma pequena alteração no método ```refresh``` da classe ```Car```.
+Para isso, precisamos fazer uma pequena alteração no método ```update``` da classe ```Car```.
 
 Vamos definir isso fora do ```__main__`` como valores constantes:
 
@@ -308,10 +306,10 @@ LEFT_BARRIER = 200
 RIGHT_BARRIER = 600
 ```
 
-Depois, vamos alterar o método ```refresh```:
+Depois, vamos alterar o método ```update```:
 
 ```python
-def refresh (self, direction):
+def update (self, direction):
     if direction == "UP" and self.y > 0:
                 self.y -= 10
     elif direction == "DOWN" and self.y < WINDOW_SIZE[1]:
@@ -340,7 +338,7 @@ pygame.draw.rect(screen, ROAD_COLOR, (RIGHT_BARRIER + 20, 0, 20, 600))
 
 Para finalizarmos, precisamos adicionar a classe para os nossos obstáculos. Bom, ela é idêntica ao nosso carro, porém com uma diferença: ao invés de se movimentar para as quatro direções, ela apenas se movimenta para cima, já que a nossa estrada vai aparecendo em um esquema de rolagem. 
 
-Vamos chamar essa função também de ```refresh``` para a classe ```Obstacle```. No restante, ela será idêntica à classe ```Car```.
+Vamos chamar essa função também de ```update``` para a classe ```Obstacle```. No restante, ela será idêntica à classe ```Car```.
 
 ```python
 class Obstacle(pygame.sprite.Sprite):
@@ -360,13 +358,98 @@ class Obstacle(pygame.sprite.Sprite):
     def show (self, surface):
         pygame.draw.rect(surface, self.color, self.rect)
     
-    def refresh (self):
+    def update (self):
         self.y -= 20 # velocidade de 20px\frame
         self.rect.top = self.y
 ```
 
 A única coisa que não utilizamos aqui antes foi a função ```randint```, da biblioteca ```random```. Para importá-la, coloque o código ```from random import randint``` junto aos imports que fizemos antes. Assim, a coordenada inicial X será um múltiplo de 20 entre 200 e 600, fazendo com que os obstáculos estejam em uma espécie de "grid", facilitando o desafio.
 
-Vamos adicionar também uma constante ```OBSTACLE_COLOR```, de valor RGB(255, 255, 0). Assim, todos os obstáculos terão a cor amarela, diferenciando-se dos demais elementos.
+Vamos adicionar também uma constante ```OBSTACLE_COLOR```, de valor RGB(255, 255, 0). Assim, todos os obstáculos terão a cor amarela, diferenciando-se dos demais elementos
 
-### CRIAR GRUPO DE SPRITES PARA OBSTÁCULOS ### 
+Para incluir estes elementos em nosso game loop, vamos utilizar uma outra classe da biblioteca Pygame, chamada de ```pygame.sprite.Group```. Ele funciona como uma espécie de lista para sprites. A cada frame, será adicionado um novo objeto neste grupo e, ao chamarmos o método ```update``` para cada sprite, caso este sprite tenha ultrapassado o limite superior da tela (x < 0px), ele será removido do grupo.
+
+O nosso game loop, então, fica assim:
+
+```python
+if __name__ == "__main__":
+    
+    pygame.init()
+
+    obstacles = pygame.sprite.Group()
+
+    running = True
+
+    car = Car(20, 50, FG_COLOR)
+
+    while running:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        # função para executar comandos
+        # enquanto alguma tecla estiver pressionada
+
+        screen.fill(BG_COLOR)
+
+        keys = pygame.key.get_pressed()
+        if keys[K_UP]:
+            car.update("UP")
+        elif keys[K_DOWN]:
+            car.update("DOWN")
+        elif keys[K_LEFT]:
+            car.update("LEFT")
+        elif keys[K_RIGHT]:
+            car.update("RIGHT")
+
+        pygame.draw.rect(screen, ROAD_COLOR, (LEFT_BARRIER - 20, 0, 20, 600))
+        pygame.draw.rect(screen, ROAD_COLOR, (RIGHT_BARRIER + 20, 0, 20, 600))
+
+        car.show(screen)
+        obstacles.add(Obstacle(20, 20, OBSTACLE_COLOR))
+        for obstacle in obstacles:
+            if obstacle.x < 0:
+                obstacles.remove(obstacle)
+            else:
+                obstacle.show(screen)
+                obstacle.update()
+
+        clock.tick(15)
+        pygame.display.flip()
+    
+    pygame.quit()
+```
+
+## Adicionando colisão
+
+Se testarmos nosso jogo agora, veremos que os obstáculos aparecem na tela normalmente, mas eles não interagem com nosso carrinho. Se batemos neles, nada acontece. Isso porque não adicionamos nenhuma detecção de colisão. Agora que a classe ```Sprite``` vai nos ajudar! 
+
+Precisamos adicionar algo no game loop que responda ao evento de uma colisão entre o carrinho e algum obstáculo. Isto precisa acontecer a cada frame. 
+
+Vamos adicionar o seguinte código no nosso game loop, junto à chamada da função ```update``` de cada obstáculo:
+
+```python
+for obstacle in obstacles:
+    if obstacle.x < 0:
+        obstacles.remove(obstacle)
+    else:
+        obstacle.show(screen)
+        obstacle.update()
+    if obstacle.rect.collidepoint(car.x, car.y + 30):
+        running = False
+```
+
+Ou seja, assim que o retângulo do nosso carrinho colidir com a coordenada (x, y+30px) — criando assim uma colisão *pixel perfect*, a variável que sustenta o game loop receberá o valor ```False```.
+
+## Finalizando
+
+Neste tutorial, aprendemos:
+
+#### - Como funciona a lógica de um jogo eletrônico
+#### - Como implementar um game loop básico usando a biblioteca Pygame
+#### - Como implementar movimentação e detecção de colisão
+
+Aproveite seus conhecimentos e curta bastante o Road Runner!
+
+Siga *@ca.melcase* para mais tutoriais! 

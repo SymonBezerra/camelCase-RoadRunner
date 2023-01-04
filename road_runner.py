@@ -37,7 +37,7 @@ class Car(pygame.sprite.Sprite):
     def show (self, surface):
         pygame.draw.rect(surface, self.color, self.rect)
 
-    def refresh (self, direction):
+    def update (self, direction):
         if direction == "UP" and self.y > 0:
             self.y -= 10
         elif direction == "DOWN" and self.y < WINDOW_SIZE[1]:
@@ -74,7 +74,7 @@ class Obstacle(pygame.sprite.Sprite):
     def show (self, surface):
         pygame.draw.rect(surface, self.color, self.rect)
     
-    def refresh (self):
+    def update (self):
         self.y -= 20
         self.rect.top = self.y
 
@@ -101,13 +101,13 @@ if __name__ == "__main__":
 
         keys = pygame.key.get_pressed()
         if keys[K_UP]:
-            car.refresh("UP")
+            car.update("UP")
         elif keys[K_DOWN]:
-            car.refresh("DOWN")
+            car.update("DOWN")
         elif keys[K_LEFT]:
-            car.refresh("LEFT")
+            car.update("LEFT")
         elif keys[K_RIGHT]:
-            car.refresh("RIGHT")
+            car.update("RIGHT")
 
         pygame.draw.rect(screen, ROAD_COLOR, (LEFT_BARRIER - 20, 0, 20, 600))
         pygame.draw.rect(screen, ROAD_COLOR, (RIGHT_BARRIER + 20, 0, 20, 600))
@@ -119,7 +119,10 @@ if __name__ == "__main__":
                 obstacles.remove(obstacle)
             else:
                 obstacle.show(screen)
-                obstacle.refresh()
+                obstacle.update()
+            if obstacle.rect.collidepoint(car.x, car.y + 30):
+                running = False
+            
 
         clock.tick(15)
         pygame.display.flip()
