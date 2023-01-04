@@ -8,7 +8,7 @@ O jogo original foi desenvolvido em uma linguagem de programação muito popular
 
 ![Imagem do jogo original](/tutorial/print_road_runner.png)
 
-Para isso, é necessário fazermos a instalação da biblioteca através do gerenciador de pacotes do Python, o PIP.
+Para isso, é necessário fazermos a instalação da biblioteca através do gerenciador de pacotes do Python, o PIP. Para isso, utilize o comando ```pip install pygame``` no seu terminal.
 Ao começarmos o nosso código, vamos importar a biblioteca Pygame e inicializá-la em nosso programa: 
 
 ```python
