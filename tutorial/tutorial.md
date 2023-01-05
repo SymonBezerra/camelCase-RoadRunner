@@ -243,7 +243,7 @@ class Car(pygame.sprite.Sprite):
 
 Percebeu que o funcionamento dessas funções é bem parecido com o código que escrevemos anteriormente? 
 
-Para isso, vamos definir uma instância da classe ```Car``` dentro do ```__main```, e substituir o código que fizemos antes pelas novas funções ```show``` e ```update```.
+Para isso, vamos definir uma instância da classe ```Car``` dentro do ```__main__```, e substituir o código que fizemos antes pelas novas funções ```show``` e ```update```.
 
 O código dentro do ```__main__``` ficará da seguinte maneira:
 
